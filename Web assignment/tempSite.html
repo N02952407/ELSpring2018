@@ -1,0 +1,36 @@
+<!doctype html>
+   <head>
+      <title>Read Temps</title>
+   </head>
+
+   <body>
+		<p>Temperatures</p>
+		<br>
+		<br>
+		<form action="http://192.168.0.12:80" method="post">
+			<label for="firstDate"> Enter date to start </label>
+				<input type="date" name="firstDate" size="30" id="firstDate"> 	
+			<br>
+			<label for="lastDate"> Enter date to end</label>
+				<input type="date" name="lastDate" size="30" id="lastDate">
+			<input type="submit">
+		</form>
+		
+		<p>{{ firstDate }}</p>
+		<br>
+		<p> to </p>
+		<br>
+		<p>{{ lastDate }}</p>
+		<br>
+
+	   <table>
+			<tbody>
+				{% for row in data %}
+				<tr>
+					<td>{{ row }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+	   </table>
+   </body>
+</html>
