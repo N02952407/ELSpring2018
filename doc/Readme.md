@@ -1,12 +1,3 @@
-1. **Personal Info**:  
-Name: Emil Padikkala  
-Major: Computer Science  
-ID: [N02952407](https://github.com/N02952407)  
-Year: Senior  
-2. **Class Start:** Jan 22, 2018
-3. **Class End:** May 8, 2018
-
-
 **Project Description**  
 Using a html interface we want to control a raspberry pi camera to take still photos and rotate the camera with servos attached to it.  
 
