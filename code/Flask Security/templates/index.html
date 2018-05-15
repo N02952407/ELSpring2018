@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style>
+		.slidecontainer {
+			width: 100%;
+		}
+
+		.slider {
+			-webkit-appearance: none;
+			width: 100%;
+			height: 25px;
+			background: #1fd3a3;
+			outline: none;
+			opacity: 0.4;
+			-webkit-transition: .2s;
+			transition: opacity .2s;
+		}
+
+		.slider:hover {
+			opacity: 1;
+		}
+
+		.slider::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			appearance: none;
+			width: 25px;
+			height: 25px;
+			opacity: 1.0;
+			background: #660066;
+			cursor: pointer;
+		}
+
+		.slider::-moz-range-thumb {
+			width: 25px;
+			height: 25px;
+			background: #0CAF50;
+			cursor: pointer;
+		}
+		</style>
+	</head>
+	
+	<body>
+		<h1><font face ="Helvetica Neue" color = "teal">Angle of Servos</font></h1> 
+		<p><font face ="Helvetica Neue">X Axis: Slide to a number between 1 and 180 inclusive:</font></p>
+		<form id = "myFormy">
+			<div id="sliderX">
+			<input id="slide" type="range" min="1" max="180" value= {{ testX }} class="slider" 	onchange="updateSliderX(this.value)" />
+			</div>
+			<br>
+		</form>
+		
+		<p><font face ="Helvetica Neue">Y Axis: Slide to a number between 1 and 90 inclusive:</font></p>
+
+		<form id = "myFormY">
+			<div id="sliderY">
+			<input id="slide" type="range" min="1" max="90" value= {{ testY }} class="slider" 	onchange="updateSliderY(this.value)" />
+			</div>
+			<br>
+		</form>
+
+	<font face ="Helvetica Neue"><div id="displayX">
+	{{ keyX }}
+
+	</div></font>
+	<br>
+
+	<font face ="Helvetica Neue"><div id="displayY">
+		{{ keyY }}
+
+		</div>
+	</font>
+		<br>
+		<br>
+
+		<button onclick="resetSliderX()">Reset X Axis</button>
+		<button onclick="resetSliderY()">Reset Y Axis</button>
+		<br>
+		<button onclick="takePic()">Take a picture</button>
+		<br>
+		<br>
+
+		<h2>Images</h2>
+		<ul>
+			{% for file in files %}
+			<li><a href="{{ file }}">{{ file }}</a></li>
+			{% endfor %}
+		</ul>
+		<br>
+		<br>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+		<script type="text/javascript">
+			function liveStream()
+			{
+				$.post('video_feed')
+			}
+			
+			function resetSliderX()
+			{
+				doWorkX(90)
+				alert("You have reset the X-Axis")
+				setTimeout(function(){ location.reload(true); }, 0);
+			}
+
+			function resetSliderY()
+			{
+				doWorkY(45);
+				alert("You have reset the Y-Axis")
+				setTimeout(function(){ location.reload(true); }, 0);
+			}
+
+			function updateSliderX(value)
+			{
+				doWorkX(value);
+			}
+
+			function updateSliderY(value)
+			{
+				doWorkY(value);
+			}
+
+			function doWorkY(value) 
+			{
+				$.post("receiverY", {data : value}, function(result){
+					//alert("*----Received Data----*: " + result );
+					document.getElementById("displayY").innerHTML = result;
+				});
+				event.preventDefault();
+			}
+
+			function doWorkX(value) 
+			{
+				$.post("receiverX", {data : value}, function(result){
+					//alert("*----Received Data----*: " + result );
+					document.getElementById("displayX").innerHTML = result;
+				});
+				event.preventDefault();
+			}
+
+			function refresh()
+			{
+				setTimeout(function(){ location.reload(true); alert("I hope you were smiling for the picture we just took.");}, 0);
+			}
+
+			function takePic()
+			{
+				$.post("takePic");
+				event.preventDefault();
+				refresh();
+			}
+		</script>
+	</body>
+</html>
