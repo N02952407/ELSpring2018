@@ -15,7 +15,7 @@ For final bugs, there was a slight inconsistency for both servos when we inputte
 
 First, install the Adafruit PCA9685 PWM servo/LED controller by running the following command:
 
-sudo pip install adafruit-pca9685
+	sudo pip install adafruit-pca9685
 
 Next, install Flask and camera dependencies using:
 
