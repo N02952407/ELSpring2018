@@ -23,10 +23,8 @@ def output(req_path):
 	# serve index template
 	global resultY
 	global resultX
-	# declare directories for images and potential videos
+	# declare directory for images
 	BASE_DIR = '/home/CoryBoris/Adafruit_Python_PCA9685/images'
-	Second_DIR = '/home/CoryBoris/Adafruit_Python_PCA9685/Flask_Videos'
-	abs_path2 = os.path.join(Second_DIR, req_path)
 	abs_path = os.path.join(BASE_DIR, req_path)
 	# case if path does not exist
 	if not os.path.exists(abs_path):
@@ -34,16 +32,9 @@ def output(req_path):
 	# case to send files in directory to page
 	if os.path.isfile(abs_path):
 		return send_file(abs_path)
-
-	if not os.path.exists(abs_path2):
-		return abort(404)
-
-	if os.path.isfile(abs_path2):
-		return send_file(abs_path2)
 	# variables for HTML
-	files2 = os.listdir(abs_path2)
 	files = os.listdir(abs_path)
-	return render_template('index.html', files=files, files2=files2, keyY = "The Y-Axis Servos is at: " + resultY + " degrees", keyX = "The X-Axis Servos is at: " + resultX + " degrees", testY = resultY, testX = resultX)
+	return render_template('index.html', files=files, keyY = "The Y-Axis Servos is at: " + resultY + " degrees", keyX = "The X-Axis Servos is at: " + resultX + " degrees", testY = resultY, testX = resultX)
 
 @app.route('/receiverY', methods =['POST'])
 def receiverY():
@@ -119,9 +110,9 @@ def takePic():
 		# variables to save boom position
         global resultY
         global resultX
-		# creates string for timestamp of picture
+		# creates string for time stamp of picture
         date = datetime.datetime.now().strftime("%m_%d_%Y_%H_%M_%S")
-		# open camera instance and save photo with timestamp and coordinates
+		# open camera instance and save photo with time stamp and coordinates
         with picamera.PiCamera() as camera:
             camera.resolution = (640,480)
             camera.capture("/home/CoryBoris/Adafruit_Python_PCA9685/images/"+date+"_Y-axis: " + resultY + "_X-axis: " + resultX +".jpg")
