@@ -29,5 +29,7 @@ After, edit line 27 of FinalServos.py and set BASE_DIR to the directory where yo
 ## Work Division
 
 Cory Boris: 33.3 %
+
 Cansu Çabuk: 33.3 %
+
 Emil Padikkala: 33.3 %
